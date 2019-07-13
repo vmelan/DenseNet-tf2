@@ -47,6 +47,7 @@ class DataLoader():
     def prepare_data(self):
         """ Prepare data by using TensorFlow data API"""
         X_train, y_train, X_test, y_test = self.load_cifar10(self.config["input"]["data_path"])
+        self.len_data = X_train.shape[0]
 
         train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
         test_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
@@ -65,9 +66,14 @@ class DataLoader():
     def preprocess(self, image, label):
         # cast image to float32 type
         image = tf.cast(image, tf.float32)
-        # normalize according to training stats
+        # resize images
+        image = tf.image.resize(image, (self.config["input"]["size"][0], self.config["input"]["size"][1]))
+        # normalize according to training data stats
         image = (image - self.config["input"]["mean"]) / self.config["input"]["std"]
         # convert label to one hot
         label = tf.one_hot(label, 10)
 
         return image, label
+
+    def get_len(self):
+        return self.len_data

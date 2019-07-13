@@ -1,0 +1,39 @@
+{
+	"experiment_name": "LeNet_exp",
+	"load_model": "" ,
+
+	"input": {
+		"data_path": "../cifar-10-batches-py/",
+		"mean": [125.307, 122.950, 113.865],
+		"std": [62.993,62.088,66.705],
+		"size": [224, 224],
+		"num_classes": 10
+		},
+
+	"model": {
+		"name": "DenseNet121",
+		"growth_rate": 12,
+		"compression_factor": 0.5
+	},
+
+	"optimizer": {
+		"optimizer_type": "AdamOptimizer",
+		"optimizer_params": {
+			"learning_rate": 0.001,
+			"beta1": 0.9,
+			"beta2": 0.999,
+			"epsilon": 1e-7
+		}
+	},
+
+	"trainer": {
+		"epochs": 30,
+		"batch_size": 32,
+		"buffer_size": 1000,
+		"num_iter_per_epoch": 350,
+		"save_dir": "./saved/",
+		"save_trained_name": "model_trained",
+		"save_freq": 5,
+		"verbose": 2
+	}
+}
