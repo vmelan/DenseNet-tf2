@@ -18,7 +18,6 @@ class DenseBlock(layers.Layer):
 class BottleneckLayer(layers.Layer):
     def __init__(self, growthRate):
         super().__init__()
-
         self.conv1 = layers.Conv2D(4 * growthRate, kernel_size=1, strides=1, padding="same")
         self.conv2 = layers.Conv2D(growthRate, kernel_size=3, strides=1, padding="same")
         self.bn1 = layers.BatchNormalization(momentum=0.99, epsilon=0.001)
@@ -45,9 +44,7 @@ class TransitionLayer(layers.Layer):
         self.batchNorm = layers.BatchNormalization(momentum=0.99, epsilon=0.001)
         self.conv = layers.Conv2D(int(numChannels * compressionFactor),
                                   kernel_size=1, strides=1, padding="same")
-
         self.dropout = layers.Dropout(dropoutRate)
-
         self.relu = layers.Activation("relu")
         self.avgpool = layers.AveragePooling2D((2, 2), strides=2)
 
@@ -60,7 +57,7 @@ class TransitionLayer(layers.Layer):
 class ClassificationLayer(layers.Layer):
     def __init__(self, num_classes):
         super().__init__()
-        self.avgpool = layers.MaxPooling2D((7, 7), strides=7)
+        self.avgpool = layers.GlobalAveragePooling2D()
         self.flatten = layers.Flatten()
         self.dense = layers.Dense(num_classes)
         self.softmax = layers.Activation("softmax")
