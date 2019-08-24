@@ -43,7 +43,7 @@ def main(config):
 
 
     for epoch in range(config["trainer"]["epochs"]):
-        for step, (images, labels) in tqdm(enumerate(train_loader), total=int(data.get_len() / config["trainer"]["batch_size"])):
+        for step, (images, labels) in tqdm(enumerate(train_loader), total=int(len(data) / config["trainer"]["batch_size"])):
             train_step(images, labels)
         template = 'Epoch {}, Loss: {:.4f}, Accuracy: {:.4f}'
         print (template.format(epoch+1,

@@ -66,14 +66,30 @@ class DataLoader():
     def preprocess(self, image, label):
         # cast image to float32 type
         image = tf.cast(image, tf.float32)
+
         # resize images
         image = tf.image.resize(image, (self.config["input"]["size"][0], self.config["input"]["size"][1]))
         # normalize according to training data stats
         image = (image - self.config["input"]["mean"]) / self.config["input"]["std"]
+        # data augmentation
+        image = self.augment(image)
         # convert label to one hot
         label = tf.one_hot(label, 10)
 
         return image, label
 
-    def get_len(self):
+    def augment(self, image):
+        """ Image augmentation """
+        image = self._random_flip(image)
+        return image
+
+    def _random_flip(self, image):
+        """ Flip augmentation randomly"""
+        image = tf.image.random_flip_left_right(image)
+        image = tf.image.random_flip_up_down(image)
+
+        return image
+
+    def __len__(self):
+        """ Length of data """
         return self.len_data
