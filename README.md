@@ -2,7 +2,7 @@
 
  Implementation of DenseNet using Tensorflow 2.0 subclassing API
 
-<img src="images/model-densenet.jpg" style="width: 50%; height: 50%"/>
+![model-densenet](images/model-densenet.JPG)
 
 ## Installation
 
